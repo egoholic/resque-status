@@ -170,7 +170,7 @@ module Resque
         Resque::Plugins::Status::Hash.killed(uuid)
         on_killed if respond_to?(:on_killed)
       rescue Exception => e
-        @options[:logger].info("<<RESQUE-STATUS>> ERROR(in: #{self.class} job)! #{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}\n\n\tinspect: #{inspect}\n\n") if @options[:logger]
+        Resque.logger.info("<<RESQUE-STATUS>> ERROR(in: #{self.class} job)! #{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}\n\n\tinspect: #{inspect}\n\n")
         failed("The task failed because of an error: #{e}")
         if respond_to?(:on_failure)
           on_failure(e)
